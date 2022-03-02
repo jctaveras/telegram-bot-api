@@ -1,4 +1,4 @@
-import { Status } from 'https://deno.land/std@0.127.0/http/http_status.ts';
+import { Status } from "https://deno.land/std@0.127.0/http/http_status.ts";
 import { Message, SendMessageParams, User } from "./types.ts";
 
 class TelegramBotAPI {
@@ -7,7 +7,7 @@ class TelegramBotAPI {
 
   constructor(botToken: string) {
     this.botToken = botToken;
-    this.methodURL = `https://api.telegram.org/bot${this.botToken}`
+    this.methodURL = `https://api.telegram.org/bot${this.botToken}`;
   }
 
   /**
@@ -32,7 +32,7 @@ class TelegramBotAPI {
    */
   async logOut(): Promise<boolean> {
     const response = await fetch(`${this.methodURL}/logOut`);
-    
+
     return response.status === Status.OK;
   }
 
@@ -43,18 +43,18 @@ class TelegramBotAPI {
    * Returns True on success. Requires no parameters.
    */
   async close(): Promise<boolean> {
-    const response = await fetch(`${this.botToken}/close`)
+    const response = await fetch(`${this.botToken}/close`);
 
     return response.status === Status.OK;
   }
 
   async sendMessage(params: SendMessageParams): Promise<Message> {
     const response = await fetch(`${this.methodURL}/sendMessage`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(params)
+      body: JSON.stringify(params),
     });
     const message = await response.json() as unknown as Message;
 

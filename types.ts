@@ -1,12 +1,41 @@
-type ChatType = 'private' | 'group' | 'supergroup' | 'channel';
+type ChatType = "private" | "group" | "supergroup" | "channel";
 
-type TypeEntities = 'mention' | 'hastag' | 'cashtag' | 'bot_command' | 'url' | 'email' | 'phone_number' | 'bold' | 'italic' | 'underline' | 'strikethrough' | 'spoiler' | 'code' | 'pre' | 'text_link' | 'text_mention';
+type TypeEntities =
+  | "mention"
+  | "hastag"
+  | "cashtag"
+  | "bot_command"
+  | "url"
+  | "email"
+  | "phone_number"
+  | "bold"
+  | "italic"
+  | "underline"
+  | "strikethrough"
+  | "spoiler"
+  | "code"
+  | "pre"
+  | "text_link"
+  | "text_mention";
 
-type MaskPositionPoint = 'forehead' | 'eye' | 'mouth' | 'chin';
+type MaskPositionPoint = "forehead" | "eye" | "mouth" | "chin";
 
-type PollType = 'regular' | 'quiz';
+type PollType = "regular" | "quiz";
 
-type EncryptedPassportElementType = 'personal_details' | 'passport' | 'driver_license' | 'identity_card' | 'internal_passport' | 'address' | 'utility_bill' | 'bank_statement' | 'rental_agreement' | 'passport_registration' | 'temporary_registration' | 'phone_number' | 'email';
+type EncryptedPassportElementType =
+  | "personal_details"
+  | "passport"
+  | "driver_license"
+  | "identity_card"
+  | "internal_passport"
+  | "address"
+  | "utility_bill"
+  | "bank_statement"
+  | "rental_agreement"
+  | "passport_registration"
+  | "temporary_registration"
+  | "phone_number"
+  | "email";
 
 type Contact = {
   phone_number: string;
@@ -63,7 +92,7 @@ type TelegramDocument = {
   file_size?: number;
 };
 
-export  type User = {
+export type User = {
   can_join_groups?: boolean;
   can_read_all_group_messages?: boolean;
   first_name: string;
@@ -181,7 +210,7 @@ export type Message = {
 
 type MessageId = {
   message_id: number;
-}
+};
 
 type Chat = {
   bio?: string;
@@ -350,7 +379,6 @@ type OrderInfo = {
   phone_number?: string;
   email?: string;
   shipping_address?: ShippingAddress;
-
 };
 
 type ShippingAddress = {
@@ -412,10 +440,10 @@ export type SendMessageParams = {
   reply_to_message_id?: number;
   allow_sending_without_reply?: boolean;
   reply_markup?:
-    InlineKeyboardMarkup 
+    | InlineKeyboardMarkup
     | ReplyKeyboardMarkup
     | ReplyKeyboardRemove
-    | ForceReply
+    | ForceReply;
 };
 
 export type ForceReply = {
@@ -427,7 +455,7 @@ export type ForceReply = {
 export type ReplyKeyboardRemove = {
   remove_keyboard: boolean;
   selective?: boolean;
-}
+};
 
 export type ReplyKeyboardMarkup = {
   keyboard: Array<Array<KeyboardButton>>;
@@ -441,9 +469,9 @@ export type KeyboardButton = {
   text: string;
   request_contat?: boolean;
   request_location?: boolean;
-  request_poll?: KeyboardButtonPollType
-}
+  request_poll?: KeyboardButtonPollType;
+};
 
 export type KeyboardButtonPollType = {
   type: string;
-}
+};
