@@ -1,4 +1,4 @@
-export type ChatType = "private" | "group" | "supergroup" | "channel";
+export type ChatType = "sender" | "private" | "group" | "supergroup" | "channel";
 
 export type TypeEntities =
   | "mention"
@@ -153,6 +153,7 @@ export type Message = {
   from?: User;
   sender_chat?: Chat;
   date: number;
+  chat: Chat;
   forward_from?: User;
   forward_from_chat?: Chat;
   forward_from_message_id?: number;
@@ -499,3 +500,164 @@ export type KeyboardButton = {
 export type KeyboardButtonPollType = {
   type: string;
 };
+
+export type TelegramUpdate = {
+  update_id: number;
+  message?: Message;
+  edited_message?: Message;
+  channel_post?: Message;
+  edited_channel_post?: Message;
+  inline_query?: InlineQuery;
+  chosen_inline_result?: ChosenInlineResult;
+  callback_query?: CallbackQuery;
+  shipping_query?: ShippingQuery;
+  pre_checkout_query?: PreCheckoutQuery;
+  poll?: Poll;
+  poll_answer?: PollAnswer;
+  my_chat_member?: ChatMemberUpdated;
+  chat_member?: ChatMemberUpdated;
+  chat_join_request?: ChatJoinRequest;
+};
+
+type ChatJoinRequest = {
+  chat: Chat;
+  from: User;
+  date: number;
+  bio?: string;
+  invite_link?: ChatInviteLink;
+};
+
+type PollAnswer = {
+  poll_id: string;
+  user: User;
+  option_ids: Array<number>;
+};
+
+export type InlineQuery = {
+  id: string;
+  from: User;
+  query: string;
+  offset: string;
+  chat_type?: ChatType;
+  location?: TelegramLocation;
+};
+
+export type ChosenInlineResult = {
+  result_id: string;
+  from: User;
+  location?: TelegramLocation;
+  inline_message_id?: string;
+  query?: string;
+};
+
+export type CallbackQuery = {
+  id: string;
+  from: User;
+  message?: Message;
+  inline_message_id?: string;
+  chat_instance?: string;
+  data?: string;
+  game_short_name?: string;
+};
+
+export type ShippingQuery = {
+  id: string;
+  from: User;
+  invoice_payload: string;
+  shipping_address: ShippingAddress;
+};
+
+export type PreCheckoutQuery = {
+  id: string;
+  from: User;
+  currency: string;
+  total_amount: number;
+  invoice_payload: string;
+  shipping_option_id?: string;
+  order_info?: OrderInfo;
+};
+
+export type ChatMemberUpdated = {
+  chat: Chat;
+  user: User;
+  date: number;
+  old_chat_member: ChatMember;
+  new_chat_member: ChatMember;
+  invite_link?: ChatInviteLink;
+};
+
+type ChatInviteLink = {
+  invite_link: string;
+  creator: User;
+  creates_join_request: boolean;
+  is_primary: boolean;
+  is_revoked: boolean;
+  name?: string;
+  expire_date?: number;
+  member_limit?: number;
+  pending_join_request_count?: number;
+};
+
+export type ChatMember =
+ChatMemberOwner
+| ChatMemberAdministrator
+| ChatMemberMember
+| ChatMemberRestricted
+| ChatMemberLeft
+| ChatMemberBanned;
+
+type ChatMemberMember = {
+  status: string;
+  user: User;
+};
+
+type ChatMemberOwner = {
+  status: string;
+  user: User;
+  is_anonymous: boolean;
+  custom_title?: string;
+}
+
+type ChatMemberAdministrator = {
+  status: string;
+  user: User;
+  can_be_edited: boolean;
+  is_anonymous: boolean;
+  can_manage_chat: boolean;
+  can_delete_messages: boolean;
+  can_manage_voice_chats: boolean;
+  can_restrict_members: boolean;
+  can_promote_members: boolean;
+  can_change_info: boolean;
+  can_invite_users: boolean;
+  can_post_messages?: boolean;
+  can_edit_messages?: boolean;
+  can_pin_messages?: boolean;
+  custom_title?: string;
+}
+
+type ChatMemberRestricted = {
+  status: string;
+  user: User;
+  is_member: boolean;
+  can_change_info: boolean;
+  can_invite_users: boolean;
+  can_pin_messages: boolean;
+  can_send_messages: boolean;
+  can_send_media_messages: boolean;
+  can_send_polls: boolean;
+  can_send_other_messages: boolean;
+  can_add_web_page_previews: boolean;
+  until_date: number;
+}
+
+type ChatMemberLeft = {
+  status: string;
+  user: User;
+}
+
+type ChatMemberBanned = {
+  status: string;
+  user: User;
+  until_date: number;
+}
