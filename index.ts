@@ -1,5 +1,11 @@
-import { Status } from "https://deno.land/std@0.127.0/http/http_status.ts";
-import { Message, SendMessageParams, User } from "./types.ts";
+import {
+  DeleteWebHookParams,
+  Message,
+  SendMessageParams,
+  SetWebHookParams,
+  User,
+  WebhookInfo,
+} from "./types.ts";
 
 class TelegramBotAPI {
   private botToken: string;
@@ -11,15 +17,62 @@ class TelegramBotAPI {
   }
 
   /**
+   * Use this method to specify a url and receive incoming updates via an outgoing webhook.
+   * Whenever there is an update for the bot, we will send an HTTPS POST request to the specified url,
+   * containing a JSON-serialized Update. In case of an unsuccessful request, we will give up after a
+   * reasonable amount of attempts. Returns True on success.
+   */
+  async setWebhook(params: SetWebHookParams): Promise<boolean> {
+    const response = await fetch(`${this.methodURL}/setWebhook`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(params),
+    });
+    const payload = await response.json();
+
+    return payload.result as boolean;
+  }
+
+  /**
+   * Use this method to remove webhook integration if you decide to switch back to getUpdates.
+   * Returns True on success.
+   */
+  async deleteWebhook(params?: DeleteWebHookParams): Promise<boolean> {
+    const response = await fetch(`${this.methodURL}/deleteWebhook`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(params),
+    });
+    const payload = await response.json();
+
+    return payload.result as boolean;
+  }
+
+  /**
+   * Use this method to get current webhook status. Requires no parameters. On success,
+   * returns a WebhookInfo object. If the bot is using getUpdates, will return an object with the url field empty.
+   */
+  async getWebhookInfo(): Promise<WebhookInfo> {
+    const response = await fetch(`${this.methodURL}/getWebhookInfo`);
+    const payload = await response.json();
+
+    return payload.result as WebhookInfo;
+  }
+
+  /**
    * A simple method for testing your bot's authentication token.
    * Requires no parameters.
    * Returns basic information about the bot in form of a User object.
    */
   async getMe(): Promise<User> {
     const response = await fetch(`${this.methodURL}/getMe`);
-    const user = await response.json() as unknown as User;
+    const payload = await response.json();
 
-    return user;
+    return payload.result as User;
   }
 
   /**
@@ -32,8 +85,9 @@ class TelegramBotAPI {
    */
   async logOut(): Promise<boolean> {
     const response = await fetch(`${this.methodURL}/logOut`);
+    const payload = await response.json();
 
-    return response.status === Status.OK;
+    return payload.result as boolean;
   }
 
   /**
@@ -44,8 +98,9 @@ class TelegramBotAPI {
    */
   async close(): Promise<boolean> {
     const response = await fetch(`${this.botToken}/close`);
+    const payload = await response.json();
 
-    return response.status === Status.OK;
+    return payload.result as boolean;
   }
 
   async sendMessage(params: SendMessageParams): Promise<Message> {
