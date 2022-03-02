@@ -1,6 +1,6 @@
-type ChatType = "private" | "group" | "supergroup" | "channel";
+export type ChatType = "private" | "group" | "supergroup" | "channel";
 
-type TypeEntities =
+export type TypeEntities =
   | "mention"
   | "hastag"
   | "cashtag"
@@ -18,11 +18,11 @@ type TypeEntities =
   | "text_link"
   | "text_mention";
 
-type MaskPositionPoint = "forehead" | "eye" | "mouth" | "chin";
+export type MaskPositionPoint = "forehead" | "eye" | "mouth" | "chin";
 
-type PollType = "regular" | "quiz";
+export type PollType = "regular" | "quiz";
 
-type EncryptedPassportElementType =
+export type EncryptedPassportElementType =
   | "personal_details"
   | "passport"
   | "driver_license"
@@ -37,7 +37,7 @@ type EncryptedPassportElementType =
   | "phone_number"
   | "email";
 
-type Contact = {
+export type Contact = {
   phone_number: string;
   first_name: string;
   last_name?: string;
@@ -45,12 +45,12 @@ type Contact = {
   vcard?: string;
 };
 
-type Dice = {
+export type Dice = {
   emoji: string;
   value: number;
 };
 
-type Game = {
+export type Game = {
   title: string;
   description: string;
   photo: Array<PhotoSize>;
@@ -59,7 +59,7 @@ type Game = {
   animation?: TelegramAnimation;
 };
 
-type TelegramAnimation = {
+export type TelegramAnimation = {
   file_id: string;
   file_unique_id: string;
   width: number;
@@ -71,7 +71,7 @@ type TelegramAnimation = {
   file_size?: number;
 };
 
-type TelegramAudio = {
+export type TelegramAudio = {
   file_id: string;
   file_unique_id: string;
   duration: number;
@@ -83,7 +83,7 @@ type TelegramAudio = {
   thumb?: PhotoSize;
 };
 
-type TelegramDocument = {
+export type TelegramDocument = {
   fiel_id: string;
   file_unique_id: string;
   thumb?: PhotoSize;
@@ -104,14 +104,14 @@ export type User = {
   username?: string;
 };
 
-type ChatPhoto = {
+export type ChatPhoto = {
   big_file_id: string;
   bit_file_unique_id: string;
   small_file_id: string;
   small_file_unique_id: string;
 };
 
-type Invoice = {
+export type Invoice = {
   title: string;
   description: string;
   start_parameter: string;
@@ -119,7 +119,7 @@ type Invoice = {
   total_amount: number;
 };
 
-type TelegramLocation = {
+export type TelegramLocation = {
   longitud: number;
   latitud: number;
   horizontal_accuracy?: number;
@@ -128,18 +128,18 @@ type TelegramLocation = {
   proximity_alerts_radius?: number;
 };
 
-type MaksPosition = {
+export type MaksPosition = {
   point: MaskPositionPoint;
   x_shift: number;
   y_shift: number;
   scale: number;
 };
 
-type MessageAutoDeleteTimerChanged = {
+export type MessageAutoDeleteTimerChanged = {
   message_auto_delete_time: number;
 };
 
-type MessageEntity = {
+export type MessageEntity = {
   type: TypeEntities;
   offset: number;
   length: number;
@@ -208,11 +208,11 @@ export type Message = {
   reply_markup?: InlineKeyboardMarkup;
 };
 
-type MessageId = {
+export type MessageId = {
   message_id: number;
 };
 
-type Chat = {
+export type Chat = {
   bio?: string;
   can_set_sticker_set?: boolean;
   description?: string;
@@ -235,7 +235,7 @@ type Chat = {
   username?: string;
 };
 
-type ChatPermissions = {
+export type ChatPermissions = {
   can_send_messages?: boolean;
   can_send_media_messages?: boolean;
   can_send_polls?: boolean;
@@ -246,11 +246,11 @@ type ChatPermissions = {
   can_pin_messages?: boolean;
 };
 
-type InlineKeyboardMarkup = {
+export type InlineKeyboardMarkup = {
   inline_keyboard: Array<Array<InlineKeyboardButton>>;
 };
 
-type InlineKeyboardButton = {
+export type InlineKeyboardButton = {
   text: string;
   url?: string;
   login_url?: LoginUrl;
@@ -261,47 +261,47 @@ type InlineKeyboardButton = {
   pay?: boolean;
 };
 
-type CallbackGame = Record<never, never>;
+export type CallbackGame = Record<never, never>;
 
-type LoginUrl = {
+export type LoginUrl = {
   url: string;
   forward_text?: string;
   bot_username?: string;
   request_write_access?: boolean;
 };
 
-type VoiceChatStarted = Record<never, never>;
+export type VoiceChatStarted = Record<never, never>;
 
-type VoiceChatEnded = {
+export type VoiceChatEnded = {
   duration: number;
 };
 
-type VoiceChatParticipantsInvited = {
+export type VoiceChatParticipantsInvited = {
   users?: Array<User>;
 };
 
-type VoiceChatScheduled = {
+export type VoiceChatScheduled = {
   start_date: number;
 };
 
-type ProximityAlertTriggered = {
+export type ProximityAlertTriggered = {
   traveler: User;
   watcher: User;
   distance: number;
 };
 
-type PassportData = {
+export type PassportData = {
   data: Array<EncryptedPassportElement>;
   credentials: EncryptedCredentials;
 };
 
-type EncryptedCredentials = {
+export type EncryptedCredentials = {
   data: string;
   hash: string;
   secret: string;
 };
 
-type EncryptedPassportElement = {
+export type EncryptedPassportElement = {
   type: EncryptedPassportElementType;
   data?: string;
   phone_number?: string;
@@ -314,14 +314,14 @@ type EncryptedPassportElement = {
   hash: string;
 };
 
-type PassportFile = {
+export type PassportFile = {
   file_id: string;
   file_unique_id: string;
   file_size: number;
   file_date: number;
 };
 
-type PhotoSize = {
+export type PhotoSize = {
   file_id: string;
   file_unique_id: string;
   width: number;
@@ -329,7 +329,7 @@ type PhotoSize = {
   file_size: number;
 };
 
-type Poll = {
+export type Poll = {
   id: string;
   question: string;
   options: Array<PollOption>;
@@ -345,12 +345,12 @@ type Poll = {
   close_date?: number;
 };
 
-type PollOption = {
+export type PollOption = {
   text: string;
   voter_count: number;
 };
 
-type Sticker = {
+export type Sticker = {
   file_id: string;
   file_unique_id: string;
   width: number;
@@ -364,7 +364,7 @@ type Sticker = {
   file_size: number;
 };
 
-type SuccessfulPayment = {
+export type SuccessfulPayment = {
   currency: string;
   total_amout: number;
   invoice_payload: string;
@@ -374,14 +374,14 @@ type SuccessfulPayment = {
   provider_payment_charge_id: string;
 };
 
-type OrderInfo = {
+export type OrderInfo = {
   name?: string;
   phone_number?: string;
   email?: string;
   shipping_address?: ShippingAddress;
 };
 
-type ShippingAddress = {
+export type ShippingAddress = {
   country_code: string;
   state: string;
   city: string;
@@ -390,7 +390,7 @@ type ShippingAddress = {
   post_code: string;
 };
 
-type Venue = {
+export type Venue = {
   location: TelegramLocation;
   title: string;
   address: string;
@@ -400,7 +400,7 @@ type Venue = {
   google_placeP_type?: string;
 };
 
-type Video = {
+export type Video = {
   file_id: string;
   file_unique_id: string;
   width: number;
@@ -412,7 +412,7 @@ type Video = {
   file_size?: number;
 };
 
-type VideoNote = {
+export type VideoNote = {
   file_id: string;
   file_unique_id: string;
   length: number;
@@ -421,7 +421,7 @@ type VideoNote = {
   file_size?: number;
 };
 
-type Voice = {
+export type Voice = {
   file_id: string;
   file_unique_id: string;
   duration: number;
@@ -444,6 +444,30 @@ export type SendMessageParams = {
     | ReplyKeyboardMarkup
     | ReplyKeyboardRemove
     | ForceReply;
+};
+
+export type SetWebHookParams = {
+  url: string;
+  certificate?: Record<never, never>;
+  api_address?: string;
+  max_connections?: number;
+  allow_updates?: Array<string>;
+  drop_pending_updates?: boolean;
+};
+
+export type DeleteWebHookParams = {
+  drop_pending_updates?: boolean;
+};
+
+export type WebhookInfo = {
+  url: string;
+  has_custom_certificate: boolean;
+  pending_update_count: number;
+  ip_address?: string;
+  last_error_date?: number;
+  last_error_message?: string;
+  max_connections?: number;
+  allowed_updates?: Array<string>;
 };
 
 export type ForceReply = {
