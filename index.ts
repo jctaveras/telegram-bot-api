@@ -103,6 +103,9 @@ class TelegramBotAPI {
     return payload.result as boolean;
   }
 
+  /**
+   * Use this method to send text messages. On success, the sent Message is returned.
+   */
   async sendMessage(params: SendMessageParams): Promise<Message> {
     const response = await fetch(`${this.methodURL}/sendMessage`, {
       method: "POST",
@@ -111,9 +114,9 @@ class TelegramBotAPI {
       },
       body: JSON.stringify(params),
     });
-    const message = await response.json() as unknown as Message;
+    const payload = await response.json();
 
-    return message;
+    return payload.result as Message;
   }
 }
 
