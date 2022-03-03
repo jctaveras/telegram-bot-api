@@ -1,6 +1,9 @@
 import {
+CopyMessageParams,
   DeleteWebHookParams,
+  ForwardMessageParams,
   Message,
+  MessageId,
   SendMessageParams,
   SetWebHookParams,
   User,
@@ -16,51 +19,50 @@ class TelegramBotAPI {
     this.methodURL = `https://api.telegram.org/bot${this.botToken}`;
   }
 
+  private async sendPostRequest<T, K>(method: string, params?: T): Promise<K> {
+    const response = await fetch(`${this.methodURL}/${method}`, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(params)
+    });
+    const payload = await response.json();
+
+    return payload.result as K;
+  }
+
+  private async sendGetRequest<T>(method: string): Promise<T> {
+    const response = await fetch(`${this.methodURL}/${method}`);
+    const payload = await response.json();
+
+    return payload.result as T;
+  }
+
   /**
    * Use this method to specify a url and receive incoming updates via an outgoing webhook.
    * Whenever there is an update for the bot, we will send an HTTPS POST request to the specified url,
    * containing a JSON-serialized Update. In case of an unsuccessful request, we will give up after a
    * reasonable amount of attempts. Returns True on success.
    */
-  async setWebhook(params: SetWebHookParams): Promise<boolean> {
-    const response = await fetch(`${this.methodURL}/setWebhook`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(params),
-    });
-    const payload = await response.json();
-
-    return payload.result as boolean;
+  setWebhook(params: SetWebHookParams): Promise<boolean> {
+    return this.sendPostRequest<SetWebHookParams, boolean>('setWebhook', params);
   }
 
   /**
    * Use this method to remove webhook integration if you decide to switch back to getUpdates.
    * Returns True on success.
    */
-  async deleteWebhook(params?: DeleteWebHookParams): Promise<boolean> {
-    const response = await fetch(`${this.methodURL}/deleteWebhook`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(params),
-    });
-    const payload = await response.json();
-
-    return payload.result as boolean;
+  deleteWebhook(params?: DeleteWebHookParams): Promise<boolean> {
+    return this.sendPostRequest<DeleteWebHookParams, boolean>('deleteWebhook', params);
   }
 
   /**
    * Use this method to get current webhook status. Requires no parameters. On success,
    * returns a WebhookInfo object. If the bot is using getUpdates, will return an object with the url field empty.
    */
-  async getWebhookInfo(): Promise<WebhookInfo> {
-    const response = await fetch(`${this.methodURL}/getWebhookInfo`);
-    const payload = await response.json();
-
-    return payload.result as WebhookInfo;
+  getWebhookInfo(): Promise<WebhookInfo> {
+    return this.sendGetRequest<WebhookInfo>('getWebhookInfo');
   }
 
   /**
@@ -68,11 +70,8 @@ class TelegramBotAPI {
    * Requires no parameters.
    * Returns basic information about the bot in form of a User object.
    */
-  async getMe(): Promise<User> {
-    const response = await fetch(`${this.methodURL}/getMe`);
-    const payload = await response.json();
-
-    return payload.result as User;
+  getMe(): Promise<User> {
+    return this.sendGetRequest<User>('getMe');
   }
 
   /**
@@ -83,11 +82,8 @@ class TelegramBotAPI {
    * but will not be able to log in back to the cloud Bot API server for 10 minutes.
    * Returns True on success. Requires no parameters.
    */
-  async logOut(): Promise<boolean> {
-    const response = await fetch(`${this.methodURL}/logOut`);
-    const payload = await response.json();
-
-    return payload.result as boolean;
+  logOut(): Promise<boolean> {
+    return this.sendGetRequest<boolean>('logOut');
   }
 
   /**
@@ -96,27 +92,32 @@ class TelegramBotAPI {
    * again after server restart. The method will return error 429 in the first 10 minutes after the bot is launched.
    * Returns True on success. Requires no parameters.
    */
-  async close(): Promise<boolean> {
-    const response = await fetch(`${this.botToken}/close`);
-    const payload = await response.json();
-
-    return payload.result as boolean;
+  close(): Promise<boolean> {
+    return this.sendGetRequest<boolean>('close');
   }
 
   /**
    * Use this method to send text messages. On success, the sent Message is returned.
    */
-  async sendMessage(params: SendMessageParams): Promise<Message> {
-    const response = await fetch(`${this.methodURL}/sendMessage`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(params),
-    });
-    const payload = await response.json();
+  sendMessage(params: SendMessageParams): Promise<Message> {
+    return this.sendPostRequest<SendMessageParams, Message>('sendMessage', params);
+  }
 
-    return payload.result as Message;
+  /**
+   * Use this method to forward messages of any kind. Service messages can't be forwarded.
+   * On success, the sent Message is returned.
+   */
+  forwardMessage(params: ForwardMessageParams): Promise<Message> {
+    return this.sendPostRequest<ForwardMessageParams, Message>('forwardMessage', params);
+  }
+
+  /**
+   * Use this method to copy messages of any kind. Service messages and invoice messages can't be copied.
+   * The method is analogous to the method forwardMessage, but the copied message doesn't have a link to the original message.
+   * Returns the MessageId of the sent message on success.
+   */
+  copyMessage(params: CopyMessageParams): Promise<MessageId> {
+    return this.sendPostRequest<CopyMessageParams, Message>('copyMessage', params);
   }
 }
 
