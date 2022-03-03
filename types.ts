@@ -661,3 +661,29 @@ type ChatMemberBanned = {
   user: User;
   until_date: number;
 }
+
+export type ForwardMessageParams = {
+  chat_id: number | string;
+  from_chat_id: number | string;
+  disable_notification?: boolean;
+  protect_content?: boolean;
+  message_id: number;
+};
+
+export type CopyMessageParams = {
+  chat_id: number | string;
+  from_chat_id: number | string;
+  message_id: number;
+  caption?: string;
+  parse_mode?: string;
+  caption_entities?: Array<MessageEntity>;
+  disable_notification?: boolean;
+  protect_content?: boolean;
+  reply_to_message_id?: number;
+  allow_sending_without_reply?: boolean;
+  reply_markup?:
+    InlineKeyboardMarkup
+    | ReplyKeyboardMarkup
+    | ReplyKeyboardRemove
+    | ForceReply;
+};
