@@ -687,3 +687,39 @@ export type CopyMessageParams = {
     | ReplyKeyboardRemove
     | ForceReply;
 };
+
+export type SendPhotoParams = {
+  chat_id: number | string;
+  photo: FormData | string;
+  caption?: string;
+  parse_mode?: string;
+  caption_entities?: Array<MessageEntity>;
+  disable_notification?: boolean;
+  protect_content?: boolean;
+  reply_to_message_id?: number;
+  allow_sending_without_reply?: boolean;
+  reply_markup?:
+    InlineKeyboardMarkup
+    | ReplyKeyboardMarkup
+    | ReplyKeyboardRemove
+    | ForceReply;
+};
+
+export type SendLocationParams = {
+  chat_id: number | string;
+  latitude: number;
+  longitude: number;
+  horizontal_accuracy?: number;
+  live_period?: number;
+  heading?: number;
+  proximity_alert_radius?: number;
+  disable_notification?: boolean;
+  protect_content?: boolean;
+  reply_to_message_id?: number;
+  allow_sending_without_reply?: boolean;
+  replyMarkup?:
+    | InlineKeyboardMarkup
+    | ReplyKeyboardMarkup
+    | ReplyKeyboardRemove
+    | ForceReply;
+}
