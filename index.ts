@@ -4,6 +4,7 @@ CopyMessageParams,
   ForwardMessageParams,
   Message,
   MessageId,
+  SendLocationParams,
   SendMessageParams,
   SetWebHookParams,
   User,
@@ -118,6 +119,13 @@ class TelegramBotAPI {
    */
   copyMessage(params: CopyMessageParams): Promise<MessageId> {
     return this.sendPostRequest<CopyMessageParams, Message>('copyMessage', params);
+  }
+
+  /**
+   * Use this method to send point on the map. On success, the sent Message is returned.
+   */
+  sendLocation(params: SendLocationParams): Promise<Message> {
+    return this.sendPostRequest<SendLocationParams, Message>('sendLocation', params);
   }
 }
 
