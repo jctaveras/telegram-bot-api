@@ -1,6 +1,7 @@
 import {
 CopyMessageParams,
   DeleteWebHookParams,
+  EditMessageLiveLocationParams,
   ForwardMessageParams,
   Message,
   MessageId,
@@ -126,6 +127,10 @@ class TelegramBotAPI {
    */
   sendLocation(params: SendLocationParams): Promise<Message> {
     return this.sendPostRequest<SendLocationParams, Message>('sendLocation', params);
+  }
+
+  editMessageLiveLocation(params: EditMessageLiveLocationParams): Promise<Message | boolean> {
+    return this.sendPostRequest<EditMessageLiveLocationParams, Message | boolean>('editMessageLiveLocation', params);
   }
 }
 
